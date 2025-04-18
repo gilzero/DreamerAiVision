@@ -1,5 +1,9 @@
+import React from "react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { motion } from "framer-motion";
+import { AppleCard } from "@/components/ui/apple-card";
+import { appleEasing, applyTypography, typography } from "@/styles/typography";
+import { cn } from "@/lib/utils";
 
 interface PillarCardProps {
   title: string;
@@ -10,7 +14,7 @@ interface PillarCardProps {
 function PillarCard({ title, description, index }: PillarCardProps) {
   return (
     <motion.div 
-      className="apple-card hover-scale p-8"
+      className="transform transition-all duration-700 relative"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ 
         opacity: 1, 
@@ -18,18 +22,25 @@ function PillarCard({ title, description, index }: PillarCardProps) {
         transition: { 
           duration: 0.7, 
           delay: index * 0.1,
-          ease: [0.16, 1, 0.3, 1]
+          ease: appleEasing
         }
       }}
       viewport={{ once: true, margin: "-100px" }}
     >
-      <div className="flex items-center mb-5">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4 text-primary font-medium">
-          {String.fromCharCode(65 + index)}
+      <AppleCard
+        variant="glass"
+        padding="lg"
+        hover="lift"
+        className="h-full"
+      >
+        <div className="flex items-center mb-5">
+          <div className="w-12 h-12 rounded-full bg-apple-blue-light/10 flex items-center justify-center mr-4 text-apple-blue-primary font-medium">
+            {String.fromCharCode(65 + index)}
+          </div>
+          <h3 className={applyTypography.heading.h4('text-apple-gray-500')}>{title}</h3>
         </div>
-        <h3 className="text-xl font-semibold">{title}</h3>
-      </div>
-      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
+        <p className={cn(typography.body.medium, 'text-apple-gray-300')}>{description}</p>
+      </AppleCard>
     </motion.div>
   );
 }
@@ -62,13 +73,13 @@ export default function CreateSection() {
   return (
     <section 
       id="create" 
-      className={`py-32 bg-gray-50/50 dark:bg-gray-900/50 backdrop-blur-3xl section-fade-in ${isIntersecting ? 'visible' : ''} relative overflow-hidden`}
+      className={`py-32 bg-apple-gray-50 backdrop-blur-3xl section-fade-in ${isIntersecting ? 'visible' : ''} relative overflow-hidden`}
       ref={targetRef as React.RefObject<HTMLElement>}
     >
       {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 opacity-70"></div>
-      <div className="absolute top-1/4 left-1/5 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white to-apple-gray-50 opacity-70"></div>
+      <div className="absolute top-1/4 left-1/5 w-96 h-96 bg-apple-blue-light/5 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-apple-blue-light/5 rounded-full filter blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
@@ -77,22 +88,22 @@ export default function CreateSection() {
           whileInView={{ 
             opacity: 1, 
             y: 0,
-            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+            transition: { duration: 0.6, ease: appleEasing }
           }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6 inline-block">
+          <h2 className={applyTypography.heading.h2('mb-6 inline-block')}>
             <span className="relative">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-apple-blue-primary to-apple-blue-primary/70">
                 Create
               </span>
-              <span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 to-transparent"></span>
+              <span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-apple-blue-primary/50 to-transparent"></span>
             </span>
           </h2>
-          <p className="text-2xl sm:text-3xl mb-4 text-gray-700 dark:text-gray-200 font-light">
+          <p className={cn(typography.body.large, typography.serif, 'text-2xl sm:text-3xl mb-4 text-apple-gray-500 font-light')}>
             The four pillars of our solutions
           </p>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className={cn(typography.body.medium, 'text-apple-gray-300 max-w-2xl mx-auto')}>
             How we deliver transcendent AI experiences that inspire, empower, and transform.
           </p>
         </motion.div>

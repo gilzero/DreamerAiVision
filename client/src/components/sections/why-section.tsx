@@ -1,6 +1,11 @@
+import React from "react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
+import { appleEasing, applyTypography, typography } from "@/styles/typography";
+import { AppleCard } from "@/components/ui/apple-card";
+import { getColor, opacities } from "@/styles/colors";
+import { cn } from "@/lib/utils";
 
 interface ReasonCardProps {
   title: string;
@@ -43,7 +48,7 @@ function ReasonCard({ title, description, index }: ReasonCardProps) {
   
   return (
     <motion.div 
-      className="blur-backdrop px-8 py-10 rounded-2xl transform transition-all duration-700 relative"
+      className="transform transition-all duration-700 relative"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ 
         opacity: 1, 
@@ -51,41 +56,42 @@ function ReasonCard({ title, description, index }: ReasonCardProps) {
         transition: { 
           duration: 0.7, 
           delay: index * 0.15,
-          ease: [0.16, 1, 0.3, 1]
+          ease: appleEasing
         }
       }}
       viewport={{ once: true, margin: "-50px" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{
-        background: isHovered 
-          ? 'linear-gradient(145deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95))' 
-          : 'linear-gradient(145deg, rgba(255,255,255,0.75), rgba(255,255,255,0.85))'
-      }}
     >
-      {/* Number indicator with smooth animation */}
-      <motion.div 
-        className="w-14 h-14 rounded-full bg-[#0071e3]/10 flex items-center justify-center font-medium mb-6 text-[#0071e3] ml-0"
-        animate={{ 
-          scale: isHovered ? 1.1 : 1,
-          backgroundColor: isHovered ? 'rgba(0, 113, 227, 0.15)' : 'rgba(0, 113, 227, 0.1)'
-        }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      <AppleCard
+        variant="glass"
+        padding="lg"
+        hover={isHovered ? "lift" : "none"}
+        className="h-full"
       >
-        <motion.span
-          className={`text-lg ${isHovered ? 'font-semibold' : 'font-medium'}`}
+        {/* Number indicator with smooth animation */}
+        <motion.div 
+          className="w-14 h-14 rounded-full bg-apple-blue-light flex items-center justify-center font-medium mb-6 text-apple-blue-primary ml-0"
           animate={{ 
-            scale: isHovered ? 1.1 : 1
+            scale: isHovered ? 1.1 : 1,
+            backgroundColor: isHovered ? 'rgba(0, 113, 227, 0.15)' : 'rgba(0, 113, 227, 0.1)'
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4, ease: appleEasing }}
         >
-          {index + 1}
-        </motion.span>
-      </motion.div>
+          <motion.span
+            className={`text-lg ${isHovered ? 'font-semibold' : 'font-medium'}`}
+            animate={{ 
+              scale: isHovered ? 1.1 : 1
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            {index + 1}
+          </motion.span>
+        </motion.div>
       
       {/* Animated title with word-by-word reveal */}
       <motion.h3 
-        className="text-2xl font-medium mb-4 text-[#1d1d1f]"
+        className={applyTypography.heading.h3('mb-4 text-apple-gray-500')}
         variants={textVariants}
         initial="hidden"
         whileInView="visible"
@@ -104,7 +110,7 @@ function ReasonCard({ title, description, index }: ReasonCardProps) {
       
       {/* Description with fade-in effect */}
       <motion.p 
-        className="text-[#86868b] leading-relaxed"
+        className={cn(typography.body.medium, 'text-apple-gray-300')}
         initial={{ opacity: 0 }}
         whileInView={{ 
           opacity: 1,
@@ -119,13 +125,7 @@ function ReasonCard({ title, description, index }: ReasonCardProps) {
         {description}
       </motion.p>
       
-      {/* Subtle highlight animation on hover */}
-      <motion.div 
-        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-[#0071e3] to-transparent rounded-bl-2xl"
-        initial={{ width: 0 }}
-        animate={{ width: isHovered ? '100%' : '0%' }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      />
+      </AppleCard>
     </motion.div>
   );
 }
@@ -182,7 +182,7 @@ export default function WhySection() {
     <section 
       id="why" 
       ref={sectionRef}
-      className={`py-24 md:py-32 bg-[#f5f5f7] section-fade-in ${isIntersecting ? 'visible' : ''} relative overflow-hidden`}
+      className={`py-24 md:py-32 bg-apple-gray-50 section-fade-in ${isIntersecting ? 'visible' : ''} relative overflow-hidden`}
       style={{ position: 'relative' }} // Ensure position is set for scroll animations
     >
       {/* Animated background decorations */}
@@ -191,7 +191,7 @@ export default function WhySection() {
         style={{ y: backgroundY }}
       >
         <motion.div 
-          className="absolute top-1/4 left-1/3 w-[80vh] h-[80vh] bg-[#0071e3]/[0.03] rounded-full filter blur-3xl"
+          className="absolute top-1/4 left-1/3 w-[80vh] h-[80vh] bg-apple-blue-light/[0.03] rounded-full filter blur-3xl"
           animate={{ 
             scale: [1, 1.05, 1],
             opacity: [0.08, 0.06, 0.08] 
@@ -204,7 +204,7 @@ export default function WhySection() {
           }}
         />
         <motion.div 
-          className="absolute bottom-1/3 right-1/4 w-[60vh] h-[60vh] bg-[#0071e3]/[0.03] rounded-full filter blur-3xl"
+          className="absolute bottom-1/3 right-1/4 w-[60vh] h-[60vh] bg-apple-blue-light/[0.03] rounded-full filter blur-3xl"
           animate={{ 
             scale: [1, 1.08, 1],
             opacity: [0.06, 0.04, 0.06] 
@@ -230,7 +230,7 @@ export default function WhySection() {
             style={{ y: titleY }}
           >
             <motion.h2 
-              className="text-5xl font-semibold tracking-tight mb-6 text-[#1d1d1f]"
+              className={applyTypography.heading.h1('mb-6 text-apple-gray-500')}
               variants={titleVariants}
               initial="hidden"
               animate={isIntersecting ? "visible" : "hidden"}
@@ -238,7 +238,7 @@ export default function WhySection() {
               <span className="inline-block relative">
                 Why
                 <motion.span 
-                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-[#0071e3] to-transparent"
+                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-apple-blue-primary to-transparent"
                   initial={{ width: 0 }}
                   animate={{ width: isIntersecting ? '100%' : '0%' }}
                   transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -254,7 +254,7 @@ export default function WhySection() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.p 
-              className="text-2xl mb-4 text-[#1d1d1f] font-light heading-serif"
+              className={cn(typography.body.large, typography.serif, 'mb-4 text-apple-gray-500 font-light')}
               variants={titleVariants}
               initial="hidden"
               animate={isIntersecting ? "visible" : "hidden"}
@@ -263,7 +263,7 @@ export default function WhySection() {
               We see artificial intelligence differently.
             </motion.p>
             <motion.p 
-              className="text-lg text-[#86868b] leading-relaxed"
+              className={cn(typography.body.medium, 'text-apple-gray-300')}
               variants={titleVariants}
               initial="hidden"
               animate={isIntersecting ? "visible" : "hidden"}

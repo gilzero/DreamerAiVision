@@ -1,6 +1,9 @@
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
+import { appleEasing, applyTypography, typography } from "@/styles/typography";
+import { AppleCard } from "@/components/ui/apple-card";
+import { cn } from "@/lib/utils";
 
 export default function ImagineSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -54,7 +57,7 @@ export default function ImagineSection() {
     <section 
       id="imagine" 
       ref={sectionRef}
-      className={`py-24 md:py-32 overflow-hidden bg-white section-fade-in ${isIntersecting ? 'visible' : ''}`}
+      className={`py-24 md:py-32 overflow-hidden bg-apple-background-primary section-fade-in ${isIntersecting ? 'visible' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Asymmetrical layout using grid */}
@@ -68,17 +71,17 @@ export default function ImagineSection() {
             animate={isIntersecting ? "visible" : "hidden"}
           >
             <motion.h2 
-              className="text-5xl sm:text-6xl font-semibold tracking-tight mb-8 text-[#1d1d1f]"
+              className={applyTypography.heading.h1('mb-8 text-apple-gray-500')}
               variants={itemVariants}
             >
               <span className="inline-block relative">
                 Imagine
-                <span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-[#0071e3] to-transparent transform origin-left transition-all duration-300 ease-out"></span>
+                <span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-apple-blue-primary to-transparent transform origin-left transition-all duration-300 ease-out"></span>
               </span>
             </motion.h2>
             
             <motion.p 
-              className="text-xl leading-relaxed mb-10 text-[#86868b] font-light max-w-lg"
+              className={cn(typography.body.large, 'mb-10 text-apple-gray-300 font-light max-w-lg')}
               variants={itemVariants}
             >
               Some see artificial intelligence as code and algorithms. We see it as the canvas for human potential.
@@ -99,7 +102,7 @@ export default function ImagineSection() {
               className="relative z-10"
               style={{ y: imageY }}
               whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, ease: appleEasing }}
             >
               <motion.div
                 className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center"
@@ -108,16 +111,14 @@ export default function ImagineSection() {
                 <motion.img 
                   src="/logo.png" 
                   alt="Dreamer AI Studios logo" 
-                  className="w-full h-full object-contain transition-all duration-700 ease-out transform bg-transparent"
+                  className="w-full h-full object-contain transition-all duration-700 ease-out transform bg-transparent animate-float"
                   animate={{
                     scale: isHovered ? 1.05 : 1,
-                    y: [0, -10, 0, -5, 0], // Gentle flying motion
+                    filter: isHovered ? 'drop-shadow(0 10px 15px rgba(0, 113, 227, 0.3))' : 'drop-shadow(0 5px 10px rgba(0, 113, 227, 0.1))',
                   }}
                   transition={{
-                    duration: 4,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatType: "loop"
+                    duration: 0.8,
+                    ease: appleEasing
                   }}
                 />
               </motion.div>
@@ -131,29 +132,41 @@ export default function ImagineSection() {
         <div className="md:ml-20 lg:ml-28 mt-20 md:mt-24 relative">
           {/* Quote */}
           <motion.div 
-            className="quote-container relative mb-16"
+            className="relative mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.2, ease: appleEasing }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <span className="quote-mark heading-serif">"</span>
-            <p className="text-2xl sm:text-3xl italic text-[#1d1d1f] mb-4 font-light leading-relaxed heading-serif pl-8 max-w-2xl">
-              Logic will get you from A to B. Imagination will take you everywhere.
-            </p>
-            <span className="text-[#86868b] text-sm font-medium pl-8">— Albert Einstein</span>
+            <AppleCard 
+              variant="glass" 
+              padding="lg" 
+              hover="lift"
+              className="max-w-2xl"
+            >
+              <span className="text-4xl text-apple-blue-primary font-serif leading-none block mb-2">"</span>
+              <p className={cn(typography.body.large, typography.serif, 'text-2xl sm:text-3xl italic text-apple-gray-500 mb-4 font-light leading-relaxed')}>
+                Logic will get you from A to B. Imagination will take you everywhere.
+              </p>
+              <span className={cn(typography.body.small, 'text-apple-gray-300 font-medium')}>— Albert Einstein</span>
+            </AppleCard>
           </motion.div>
           
           {/* Final thought - staggered animation */}
           <motion.div 
-            className="space-y-4 max-w-3xl blur-backdrop p-8 rounded-3xl ml-0 md:-ml-10"
+            className="space-y-4 max-w-3xl ml-0 md:-ml-10"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.4, ease: appleEasing }}
             viewport={{ once: true, margin: "-100px" }}
           >
+            <AppleCard 
+              variant="glass" 
+              padding="lg" 
+              hover="scale"
+            >
             <motion.p 
-              className="text-xl text-[#86868b] font-light"
+              className={cn(typography.body.large, 'text-apple-gray-300 font-light')}
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
@@ -162,7 +175,7 @@ export default function ImagineSection() {
               At Dreamer, we start by asking
             </motion.p>
             <motion.p 
-              className="text-3xl sm:text-4xl font-medium text-[#1d1d1f] heading-serif"
+              className={cn(typography.heading.h2, typography.serif, 'text-apple-gray-500')}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.7 }}
@@ -170,6 +183,7 @@ export default function ImagineSection() {
             >
               What if your perceived limitations aren't reality?
             </motion.p>
+            </AppleCard>
           </motion.div>
         </div>
       </div>

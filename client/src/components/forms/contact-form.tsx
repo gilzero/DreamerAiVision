@@ -2,8 +2,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import { ContactMessage } from "@/lib/types";
+import { ArrowRight, Check } from "lucide-react";
+import { motion } from "framer-motion";
+import { appleEasing } from "@/styles/typography";
+
+// Import our new Apple-styled components
+import { AppleCard } from "@/components/ui/apple-card";
+import { AppleButton } from "@/components/ui/apple-button";
+import { AppleInput } from "@/components/ui/apple-input";
+import { AppleTextarea } from "@/components/ui/apple-textarea";
 import {
   Form,
   FormControl,
@@ -12,13 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import { ContactMessage } from "@/lib/types";
-import { ArrowRight, Check } from "lucide-react";
-import { motion } from "framer-motion";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -72,34 +75,39 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="blur-backdrop overflow-hidden shadow-md relative border-[#e8e8ed]/60">
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#0071e3]/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#0071e3]/5 rounded-full filter blur-3xl"></div>
+    <AppleCard 
+      variant="glass" 
+      padding="lg" 
+      hover="lift" 
+      className="overflow-hidden relative"
+    >
+      <div className="absolute -top-10 -right-10 w-40 h-40 bg-apple-blue-light rounded-full filter blur-3xl"></div>
+      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-apple-blue-light rounded-full filter blur-3xl"></div>
       
-      <CardContent className="p-8 relative z-10">
-        <h3 className="text-2xl font-semibold mb-6 text-[#1d1d1f]">Get in touch</h3>
+      <div className="relative z-10">
+        <h3 className="text-2xl font-semibold mb-6 text-apple-gray-500">Get in touch</h3>
         
         {isSubmitted ? (
           <motion.div 
             className="py-12 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7, ease: appleEasing }}
           >
-            <div className="mx-auto w-16 h-16 bg-[#0071e3]/10 rounded-full flex items-center justify-center mb-6">
-              <Check className="h-8 w-8 text-[#0071e3]" />
+            <div className="mx-auto w-16 h-16 bg-apple-blue-light rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
+              <Check className="h-8 w-8 text-apple-blue-primary" />
             </div>
-            <h4 className="text-xl font-medium mb-3 text-[#1d1d1f]">Thank you!</h4>
-            <p className="text-[#86868b] mb-6">
+            <h4 className="text-xl font-medium mb-3 text-apple-gray-500">Thank you!</h4>
+            <p className="text-apple-gray-300 mb-6">
               Your message has been sent successfully. We'll be in touch with you shortly.
             </p>
-            <Button 
-              variant="outline" 
-              className="rounded-full px-6 py-2.5 border-[#d2d2d7] hover:border-[#86868b] text-[#1d1d1f]"
+            <AppleButton 
+              variant="secondary" 
+              size="md"
               onClick={() => setIsSubmitted(false)}
             >
               Send another message
-            </Button>
+            </AppleButton>
           </motion.div>
         ) : (
           <Form {...form}>
@@ -113,10 +121,10 @@ export default function ContactForm() {
                       Your name
                     </FormLabel>
                     <FormControl>
-                      <Input 
+                      <AppleInput 
                         {...field} 
-                        className="apple-input h-11 bg-white/80 border-[#d2d2d7] rounded-lg focus:border-[#0071e3] focus-visible:ring-1 focus-visible:ring-[#0071e3]"
                         placeholder="John Appleseed"
+                        error={form.formState.errors.name?.message}
                       />
                     </FormControl>
                     <FormMessage className="text-[#ff3b30] text-xs" />
@@ -133,11 +141,11 @@ export default function ContactForm() {
                       Your email
                     </FormLabel>
                     <FormControl>
-                      <Input 
+                      <AppleInput 
                         {...field} 
                         type="email" 
-                        className="apple-input h-11 bg-white/80 border-[#d2d2d7] rounded-lg focus:border-[#0071e3] focus-visible:ring-1 focus-visible:ring-[#0071e3]"
                         placeholder="john@example.com"
+                        error={form.formState.errors.email?.message}
                       />
                     </FormControl>
                     <FormMessage className="text-[#ff3b30] text-xs" />
@@ -154,11 +162,11 @@ export default function ContactForm() {
                       Your message
                     </FormLabel>
                     <FormControl>
-                      <Textarea 
+                      <AppleTextarea 
                         {...field} 
                         rows={4} 
-                        className="apple-input bg-white/80 border-[#d2d2d7] rounded-lg focus:border-[#0071e3] focus-visible:ring-1 focus-visible:ring-[#0071e3] resize-none"
                         placeholder="I'd like to discuss a potential AI project..."
+                        error={form.formState.errors.message?.message}
                       />
                     </FormControl>
                     <FormMessage className="text-[#ff3b30] text-xs" />
@@ -166,10 +174,13 @@ export default function ContactForm() {
                 )}
               />
               
-              <Button 
+              <AppleButton 
                 type="submit" 
-                className="w-full group px-6 py-2.5 h-11 bg-[#0071e3] hover:bg-[#0077ed] text-white rounded-full font-medium transition-all duration-200 flex justify-center items-center"
+                variant="primary"
+                size="lg"
+                fullWidth
                 disabled={isSubmitting}
+                className="group"
               >
                 {isSubmitting ? (
                   "Sending..."
@@ -179,11 +190,11 @@ export default function ContactForm() {
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </>
                 )}
-              </Button>
+              </AppleButton>
             </form>
           </Form>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </AppleCard>
   );
 }
