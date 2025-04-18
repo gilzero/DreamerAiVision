@@ -107,35 +107,6 @@ export default function HeroSection() {
               Learn More
             </AppleButton>
           </motion.div>
-          
-          {/* Animated scroll indicator */}
-          <motion.div
-            className={cn(
-              "absolute bottom-12 sm:bottom-16 left-1/2 transform -translate-x-1/2",
-              "w-12 h-12 flex items-center justify-center"
-            )}
-            initial={{ opacity: 0.6, y: 0 }}
-            animate={{ 
-              opacity: [0.6, 1, 0.6],
-              y: [0, 8, 0]
-            }}
-            transition={{ 
-              duration: 2.5,
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "easeInOut"
-            }}
-          >
-            <a 
-              href="#imagine" 
-              className="flex flex-col items-center justify-center p-3 rounded-full
-                        text-apple-gray-300 hover:text-apple-blue-primary 
-                        transition-colors duration-300 hover:bg-white/50"
-              aria-label="Scroll to next section"
-            >
-              <ChevronDown className="h-7 w-7" />
-            </a>
-          </motion.div>
         </motion.div>
       </div>
     </section>

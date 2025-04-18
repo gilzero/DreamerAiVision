@@ -269,8 +269,7 @@ export default function WhySection() {
               animate={isIntersecting ? "visible" : "hidden"}
               transition={{ delay: 0.2 }}
             >
-              Our vision extends beyond conventional AI. We believe in crafting intelligence that empowers 
-              rather than replaces, that creates rather than mimics, and that dreams rather than predicts.
+              Artificial intelligence is neither merely artificial nor simply intelligent. It's human knowledge transformed and transcended through computation. 'Move 37' is a step in the universe.
             </motion.p>
           </motion.div>
         </div>
