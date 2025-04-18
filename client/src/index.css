@@ -1,0 +1,472 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* Enhanced smooth scrolling */
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Adjusted for fixed header */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  /* Refined base typography */
+  body {
+    @apply font-sans antialiased bg-white text-gray-900;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    font-feature-settings: "kern", "liga";
+    letter-spacing: -0.011em;
+    color: #1d1d1f;
+    background-image: 
+      radial-gradient(circle at 80% 10%, rgba(0, 113, 227, 0.02) 0%, transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(0, 113, 227, 0.01) 0%, transparent 50%);
+  }
+
+  /* Custom serif font for specific headings */
+  @font-face {
+    font-family: 'New York';
+    src: local('New York'), local('NewYork');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.021em;
+    @apply tracking-tight;
+    color: #1d1d1f;
+  }
+
+  h1 {
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+
+  /* Using variable font weights */
+  h2 {
+    font-weight: 700;
+    letter-spacing: -0.028em;
+  }
+
+  h3 {
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+
+  .heading-serif {
+    font-family: 'New York', Georgia, serif;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    letter-spacing: -0.003em;
+    line-height: 1.5;
+    color: #424245;
+  }
+
+  a {
+    color: #0066cc;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: #0071e3;
+  }
+  
+  /* Refined text selection styling */
+  ::selection {
+    background: rgba(0, 113, 227, 0.2);
+    color: #1d1d1f;
+  }
+
+  /* Apple-style gradients */
+  .hero-gradient {
+    background: radial-gradient(circle at 50% 50%, 
+      rgba(0, 113, 227, 0.06), 
+      rgba(255, 255, 255, 0) 70%
+    );
+  }
+
+  .navbar-fixed {
+    @apply backdrop-blur-xl bg-white/90 border-b border-gray-200/20;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01);
+  }
+
+  /* Enhanced Animation Styles */
+  .section-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .section-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Staggered animations for list items */
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .stagger-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Subtle animation for section entry */
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Animation for images */
+  .image-reveal {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: 
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .image-reveal.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* Animation for paragraph text */
+  .text-reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .text-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Scroll progress indicator */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #0071e3, #40adff);
+    z-index: 9999;
+    transition: width 0.1s;
+  }
+  
+  /* Scroll indicator dots */
+  .scroll-indicator {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 50;
+  }
+  
+  .scroll-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .scroll-dot.active {
+    background: #0071e3;
+    transform: scale(1.5);
+  }
+
+  /* Enhanced Card and UI Element Styles */
+  .apple-card {
+    @apply bg-white/85 backdrop-blur-xl border border-gray-100/60 rounded-xl;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Glass highlight effect */
+  .apple-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+
+  .apple-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    @apply border-gray-200/60 bg-white/95;
+  }
+
+  .apple-card:hover::before {
+    left: 100%;
+  }
+
+  /* Quote styling */
+  .quote-mark {
+    font-size: 5rem;
+    line-height: 0;
+    position: absolute;
+    top: -0.5rem;
+    left: -1.5rem;
+    color: rgba(0, 113, 227, 0.08);
+    font-family: 'New York', Georgia, serif;
+    transition: opacity 0.4s ease;
+  }
+
+  .quote-container:hover .quote-mark {
+    opacity: 0.6;
+  }
+
+  /* Enhanced Apple-style pill buttons */
+  .pill {
+    position: relative;
+    overflow: hidden;
+    @apply rounded-full transition-all duration-300;
+  }
+
+  .pill:after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+
+  .pill:hover:after {
+    transform: rotate(30deg) translate(50%, 50%);
+  }
+
+  /* Enhanced Apple-style animations */
+  .hover-scale {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Section backgrounds */
+  .bg-light {
+    @apply bg-[#f5f5f7];
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Noise texture overlay for depth */
+  .bg-light::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Enhanced UI components */
+  .primary-button {
+    @apply bg-[#0071e3] text-white rounded-full px-6 py-3 font-medium shadow-sm;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .primary-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+
+  .primary-button:hover {
+    @apply bg-[#0077ed] shadow-md;
+    transform: translateY(-1px);
+  }
+
+  .primary-button:hover::after {
+    left: 100%;
+  }
+
+  /* Enhanced typography with animations */
+  .text-primary-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#0066cc] to-[#0071e3];
+    background-size: 200% 100%;
+    animation: gradientShift 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Refined section styling with animations */
+  .section-title {
+    @apply text-4xl sm:text-5xl font-bold tracking-tight mb-6 inline-block;
+    position: relative;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.2em;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0071e3, transparent);
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .section:hover .section-title::after {
+    width: 100%;
+  }
+
+  .section-subtitle {
+    @apply text-2xl sm:text-3xl mb-4 text-[#86868b] font-light;
+  }
+
+  /* Enhanced blur elements - true glassmorphism */
+  .blur-backdrop {
+    @apply backdrop-blur-xl bg-white/75 border border-white/50 rounded-2xl;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.04),
+      0 2px 5px rgba(255, 255, 255, 0.3) inset;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Subtle gradient for depth */
+  .blur-backdrop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+    z-index: -1;
+  }
+
+  /* Apple navigation item */
+  .nav-item {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #424245;
+    transition: color 0.2s ease;
+  }
+
+  .nav-item:hover {
+    color: #1d1d1f;
+  }
+
+  .nav-item.active {
+    color: #0071e3;
+  }
+
+  /* Apple footer styling */
+  .footer-link {
+    font-size: 12px;
+    color: #6e6e73;
+    transition: color 0.2s ease;
+  }
+
+  .footer-link:hover {
+    color: #1d1d1f;
+  }
+
+  /* Apple form elements */
+  .apple-input {
+    @apply border border-gray-300/60 rounded-lg py-3 px-4 outline-none;
+    transition: all 0.2s ease;
+  }
+
+  .apple-input:focus {
+    @apply border-[#0071e3] shadow-sm;
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+  }
+}
